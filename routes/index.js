@@ -63,58 +63,30 @@ router.get("/register", function(req, res) {
 });
 
 // handle sign up logic
-router.post("/register", upload.single("image"), function(req, res) {
-  // if (req.file === undefined) {
-  //   var newUser = new User({
-  //     username: req.body.username,
-  //     email: req.body.email,
-  //     firstName: req.body.firstName,
-  //     lastName: req.body.lastName,
-  //     bio: req.body.bio,
-  //     image: "",
-  //     imageId: ""
-  //   });
-  //   User.register(newUser, req.body.password, function(err, user) {
-  //     if (err) {
-  //       return returns.render("register", {
-  //         error: err.message
-  //       });
-  //     }
-  //     passport.authenticate("local")(req, res, function() {
-  //       res.redirect("/blogs");
-  //     });
-  //   });
-  // } else 
-  {
-    cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
-        if (err) {
-          req.flash("error", err.messsage);
-          return res.redirect("back");
-        }
-        req.body.user.image = result.secure_url;
-        req.body.user.imageId = result.public_id;
-        var newUser = new User({
-          username: req.body.username,
-          email: req.body.email,
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          bio: req.body.bio,
-          image: req.body.user.image,
-          imageId: req.body.user.imageId
-        });
-        User.register(newUser, req.body.password, function(err, user) {
-          if (err) {
-            return res.render("register", {
-              error: err.message
-            });
-          }
-          passport.authenticate("local")(req, res, function() {
-            res.redirect("/blogs");
-          });
-        });
+router.post("/register", function(req, res){
+    var newUser = new User({
+        username: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        bio: req.body.bio
       });
-  }
+     if(req.body.adminCode === 'ExGro') {
+      newUser.isAdmin = true;
+    }
+
+    User.register(newUser, req.body.password, function(err, user){
+        if(err){
+            console.log(err);
+            return res.render("register", {error: err.message});
+        }
+        passport.authenticate("local")(req, res, function(){
+           req.flash("success", "Successfully Signed Up! Nice to meet you " + req.body.firstName);
+           res.redirect("/blogs"); 
+        });
+    });
 });
+
 
 // show login form
 router.get("/login", function(req, res) {
@@ -131,7 +103,8 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/blogs",
     failureRedirect: "/login",
-    failureFlash: true
+    failureFlash: true,
+    successFlash: true
   }),
   function(req, res) {}
 );
@@ -139,6 +112,7 @@ router.post(
 // logout route
 router.get("/logout", function(req, res) {
   req.logout();
+  req.flash("success", "See you later!");
   res.redirect("/");
 });
 
