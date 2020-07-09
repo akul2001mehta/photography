@@ -18,7 +18,13 @@ var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index")
     
-mongoose.connect("mongodb://localhost:27017/Asm1", {useNewUrlParser: true ,  useUnifiedTopology: true });
+mongoose.connect("mongodb+srv://Udhav:<pujajoshi1@@asm.cpd5f.gcp.mongodb.net/Asm1?retryWrites=true&w=majority", {
+  useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }).then(() => {
+    console.log("Connected to DB");
+  }).catch(err => {
+    console.log("Error-----", err.message);
+  });
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -54,10 +60,9 @@ app.use("/blogs", campgroundRoutes);
 app.use("/blogs/:id/comments", commentRoutes);
 app.use("/blogs/:id/reviews", reviewRoutes);
 
-var port = process.env.PORT || 3000;
-app.listen(port, function () {
-  console.log("Server Has Started!");
-});
+app.listen(process.env.PORT, process.env.IP, function(){
+  console.log("STARTED!");
+})
 // app.listen(3000, function(){
 //   console.log("Started!");
 // });
