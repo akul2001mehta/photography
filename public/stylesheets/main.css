@@ -21,6 +21,10 @@ p{
 button:hover{
 	background-color: #f7cf1e; 
 }
+img{
+  user-select: none;
+  user-drag: none;
+}
 .jumbotrongreen{
 	background-color: rgba(92,184,92,0.5)
 }

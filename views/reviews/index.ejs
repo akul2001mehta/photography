@@ -100,7 +100,7 @@
                     <p>
                         Current campground rating: <strong><%= campground.rating.toFixed(2) %></strong>
                     </p>
-                    <p><h4>All reviews for this campground:</h4></p>
+                    <p><h4>All reviews for: <%= campground.name %></h4></p>
                     <hr style="margin-top: 0;">
 
                     <% campground.reviews.forEach(function(review){ %>
@@ -116,8 +116,8 @@
                             </p>
                             <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
                             <a class="btn btn-xs btn-warning"
-                               href="/campgrounds/<%=campground._id %>/reviews/<%=review._id %>/edit">Edit</a>
-                            <form id="delete-form" action="/campgrounds/<%=campground._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+                               href="/blogs/<%=campground._id %>/reviews/<%=review._id %>/edit">Edit</a>
+                            <form id="delete-form" action="/blogs/<%=campground._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
                                 <input type="submit" class="btn btn-xs btn-danger" value="Delete">
                             </form>
                             <% } %>
