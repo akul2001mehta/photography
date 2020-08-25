@@ -107,7 +107,15 @@
                       <div class="stars">
                         <form action="/blogs/<%= campground._id %>/reviews" method="POST">
                           <fieldset class="starability-basic form-group" id="rating">
-                            <input class="star star-5" id="first-rate5" type="radio" name="review[rating]" value="5"/>
+<input id="rate" type="range" name="review[rating]" list="flame" min="1" max="5" step="1" value="1" style="width: 100%">
+<datalist id="flame">
+  <option class="star star-5" id="first-rate5" value="5"></option>
+  <option class="star star-4" id="first-rate4" value="4"></option>
+  <option class="star star-3" id="first-rate3" value="3"></option>
+  <option class="star star-2" id="first-rate2" value="2"></option>
+  <option class="star star-1" id="first-rate1" value="1"></option>
+</datalist>
+                            <!-- <input class="star star-5" id="first-rate5" type="radio" name="review[rating]" value="5"/>
                             <label class="star star-5" for="first-rate5"></label>
                             <input class="star star-4" id="first-rate4" type="radio" name="review[rating]" value="4" />
                             <label class="star star-4" for="first-rate4"></label>
@@ -116,7 +124,7 @@
                             <input class="star star-2" id="first-rate2" type="radio" name="review[rating]" value="2" />
                             <label class="star star-2" for="first-rate2"></label>
                             <input class="star star-1" id="first-rate1" type="radio" name="review[rating]" value="1" />
-                            <label class="star star-1" for="first-rate1"></label>
+                            <label class="star star-1" for="first-rate1"></label> -->
                             <p><button class="btn btn-warning" <% if (currentUser && campground.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>>Submit</button>
                           </fieldset>
                           </form>

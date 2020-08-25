@@ -60,9 +60,9 @@ app.use("/blogs", campgroundRoutes);
 app.use("/blogs/:id/comments", commentRoutes);
 app.use("/blogs/:id/reviews", reviewRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function(){
-  console.log("STARTED!");
-})
-// app.listen(3000, function(){
-//   console.log("Started!");
-// });
+// app.listen(process.env.PORT, process.env.IP, function(){
+//   console.log("STARTED!");
+// })
+app.listen(3000, function(){
+  console.log("Started!");
+});
